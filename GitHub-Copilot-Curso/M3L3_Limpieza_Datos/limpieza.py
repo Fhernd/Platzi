@@ -2,7 +2,7 @@ import pandas as pd
 
 # Cargamos el dataset. Puede ser uno que se encuentre online:
 
-# url = 'https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv'
+url = 'https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv'
 df = pd.read_csv(url)
 
 
