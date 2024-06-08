@@ -34,3 +34,11 @@ def cambiar_valores(df, columna):
 def cambiar_fecha(df, columna):
     df[columna] = pd.to_datetime(df[columna], format='%d/%m/%Y')
     return df
+
+
+# Llama a las funciones:
+df = eliminar_duplicados(df)
+df = eliminar_nulos(df)
+df = eliminar_nulos_columna(df, 'Glucose')
+df = cambiar_valores(df, 'Outcome')
+df = cambiar_fecha(df, 'Date')
