@@ -15,11 +15,11 @@
         const App = {
             data() {
                 return {
-                    message: 'Hola, mundo!'
+                    message: '<strong>Hola, mundo!<strong>'
                 }
             },
             template: `
-                <div v-text="message">
+                <div v-html="message">
                     
                 </div>
             `
