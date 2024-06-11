@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 App - Ejemplo Básico</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        const App = {
+            data() {
+                return {
+                    img: 'https://picsum.photos/200/300',
+                }
+            },
+            template: `
+                <div>
+                    <img v-bind:src="img" v-bind:alt="img">
+                </div>
+            `
+        }
+
+        const vm = Vue.createApp(App).mount('#app')
+    </script>
+</body>
+</html>
