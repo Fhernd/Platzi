@@ -24,12 +24,17 @@
             },
             template: `
                 <div>
-                    {{ firstName }} {{ lastName }}
+                    {{ fullName }}
                 </div>
                 <div>
                     {{ dob.toLocaleDateString() }}
                 </div>
-            `
+            `,
+            computed: {
+                fullName() {
+                    return `${this.firstName} ${this.lastName}`
+                }
+            }
         }
 
         const vm = Vue.createApp(App).mount('#app')
