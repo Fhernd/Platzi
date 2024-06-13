@@ -17,24 +17,13 @@
         const App = {
             data() {
                 return {
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    dob: new Date()
+                    text: '¡Hola Mundo!',
                 }
             },
             template: `
-                <div>
-                    {{ fullName }}
-                </div>
-                <div>
-                    {{ dob.toLocaleDateString() }}
-                </div>
-            `,
-            computed: {
-                fullName() {
-                    return `${this.firstName} ${this.lastName}`
-                }
-            }
+            <p>{{ text }}</p>
+            <input type="text" v-model="text" /> 
+            `
         }
 
         const vm = Vue.createApp(App).mount('#app')
