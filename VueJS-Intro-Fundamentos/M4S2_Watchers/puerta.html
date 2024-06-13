@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 App - Ejemplo Básico</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+    <script>
+        const App = {
+            data() {
+                return {
+                    text: 'Puerta cerrada',
+                    open: false
+                }
+            },
+            template: `
+            <p>{{ text }}</p>
+            <button @click="open = !open">{{ label }}</button>
+            `,
+            watch: {
+                open(newVal, oldVal) {
+                    if (newVal) {
+                        this.text = 'Puerta abierta'
+                    } else {
+                        this.text = 'Puerta cerrada'
+                    }
+                }
+            },
+            computed: {
+                label() {
+                    return this.open ? 'Cerrar' : 'Abrir'
+                }
+            }
+        }
+
+        const vm = Vue.createApp(App).mount('#app')
+    </script>
+</body>
+
+</html>
