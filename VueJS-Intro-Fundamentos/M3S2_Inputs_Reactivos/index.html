@@ -22,7 +22,7 @@
             },
             template: `
             <p>{{ text }}</p>
-            <input type="text" v-on:input="input" v-bind:value="text" />
+            <input type="text" @input="input" :value="text" />
             `,
             methods: {
                 input(event) {
