@@ -17,12 +17,18 @@
         const App = {
             data() {
                 return {
-                    text: '¡Hola Mundo!',
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    dob: new Date()
                 }
             },
             template: `
-            <p>{{ text }}</p>
-            <input type="text" v-model="text" /> 
+                <div>
+                    {{ firstName }} {{ lastName }}
+                </div>
+                <div>
+                    {{ dob }}
+                </div>
             `
         }
 
