@@ -18,12 +18,20 @@
             data() {
                 return {
                     text: 'Puerta cerrada',
-                    open: false
+                    open: false,
+                    username: ''
                 }
             },
             template: `
             <div class="container" :class="styles">
                 <p>{{ text }}</p>
+                <div v-if="open">
+                    <p>Hola, {{ username }}</p>
+                </div>
+                <div v-else>
+                    <label for="username">Usuario: </label>
+                    <input type="text" id="username" v-model="username">
+                </div>
                 <button @click="open = !open">
                     <div v-if="open">Cerrar</div>
                     <div v-else>Abrir</div>
