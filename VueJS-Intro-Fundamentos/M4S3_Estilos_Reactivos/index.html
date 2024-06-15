@@ -18,14 +18,11 @@
             data() {
                 return {
                     text: 'Puerta cerrada',
-                    open: false,
-                    styles: {
-                        background: '#eca1a6'
-                    }
+                    open: false
                 }
             },
             template: `
-            <div class="container" :class="{ 'open': open, 'closed': !open}">
+            <div class="container" :class="styles">
                 <p>{{ text }}</p>
                 <button @click="open = !open">{{ label }}</button>
             </div>
@@ -42,6 +39,9 @@
             computed: {
                 label() {
                     return this.open ? 'Cerrar' : 'Abrir'
+                },
+                styles() {
+                    return this.open ? ['open'] : ['closed'];
                 }
             }
         }
