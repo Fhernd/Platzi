@@ -18,19 +18,26 @@
             data() {
                 return {
                     text: 'Puerta cerrada',
-                    open: false
+                    open: false,
+                    styles: {
+                        background: '#eca1a6'
+                    }
                 }
             },
             template: `
-            <p>{{ text }}</p>
-            <button @click="open = !open">{{ label }}</button>
+            <div class="container" :style="styles">
+                <p>{{ text }}</p>
+                <button @click="open = !open">{{ label }}</button>
+            </div>
             `,
             watch: {
                 open(newVal, oldVal) {
                     if (newVal) {
                         this.text = 'Puerta abierta'
+                        this.styles.background = '#b5e7a0'
                     } else {
                         this.text = 'Puerta cerrada'
+                        this.styles.background = '#eca1a6'
                     }
                 }
             },
@@ -45,13 +52,15 @@
     </script>
 
     <style>
-        html, body {
+        html,
+        body {
             height: 100vh;
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        #app, .container {
+        #app,
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,4 +86,5 @@
         }
     </style>
 </body>
+
 </html>
