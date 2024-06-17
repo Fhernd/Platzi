@@ -15,17 +15,24 @@
         const app = Vue.createApp({
             template: `
                 <div>
-                    <v-header><button>Presionar</button></v-header>
+                    <v-layout>
+                        <template v-slot:header>
+                            <h1>Header</h1>
+                        </template>
+                    </v-layout>
                     <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
                 </div>
             `
         });
 
-        app.component('v-header', {
+        app.component('v-layout', {
             template: `
                 <header>
-                    <slot></slot>
+                    <slot name="header"></slot>
                 </header>
+                <div>
+                    <slot name="content"></slot>
+                </div>
             `
         });
 
