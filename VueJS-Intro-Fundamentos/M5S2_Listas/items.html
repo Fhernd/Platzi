@@ -42,9 +42,11 @@
             `,
             methods: {
                 addPost() {
-                    this.posts.push({ title: this.title, description: this.description });
-                    this.title = '';
-                    this.description = '';
+                    if (this.title && this.description) {
+                        this.posts.push({ title: this.title, description: this.description });
+                        this.title = '';
+                        this.description = '';
+                    }
                 }
             }
         }
@@ -71,9 +73,9 @@
         }
 
         button {
-            margin-top: 20px;
+            margin-top: 12px;
             border: none;
-            background-color: white;
+            background-color: #b5e7a0;
             padding: 8px 24px;
             border-radius: 12px;
         }
@@ -93,6 +95,11 @@
 
         .item {
             border: 1px solid black;
+        }
+
+        input {
+            margin-bottom: 5px;
+            border-radius: 3px;
         }
     </style>
 </body>
