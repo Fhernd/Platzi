@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 App - Ejemplo Básico</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+    <script>
+        const App = {
+            data() {
+                return {
+                    title: '',
+                    description: '',
+                    posts: []
+                }
+            },
+            template: `
+            <div class="container">
+                <label for="title">Title: </label>
+                <input type="text" id="title" v-model="title"><br>
+                <label for="description">Description: </label>
+                <input type="text" id="description" v-model="description">
+                <button @click="addPost">Agregar</button>
+
+                <br>
+
+                <div class="list">
+                    <div v-for="item in posts" class="item">
+                        <div class="title">{{ item.title }}</div>
+                        <p>{{ item.description }}</p>
+                    </div>
+                </div>
+            </div>
+            `,
+            methods: {
+                addPost() {
+                    this.posts.push({ title: this.title, description: this.description });
+                    this.title = '';
+                    this.description = '';
+                }
+            }
+        }
+
+        const vm = Vue.createApp(App).mount('#app')
+    </script>
+
+    <style>
+        html,
+        body {
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #app,
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        button {
+            margin-top: 20px;
+            border: none;
+            background-color: white;
+            padding: 8px 24px;
+            border-radius: 12px;
+        }
+
+        .closed {
+            background-color: #eca1a6;
+        }
+
+        .open {
+            background-color: #b5e7a0;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item {
+            border: 1px solid black;
+        }
+    </style>
+</body>
+
+</html>
