@@ -35,9 +35,9 @@
                 <div v-if="open">
                     <div>Hola, {{ username }}</div>
                     <div class="list">
-                        <div class="item">
-                            <div class="title">Item 1</div>
-                            <p>Descripción del item 1</p>
+                        <div v-for="item in posts" class="item">
+                            <div class="title">{{ item.title }}</div>
+                            <p>{{ item.description }}</p>
                         </div>
                     </div>
                 </div>
