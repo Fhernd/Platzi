@@ -14,7 +14,7 @@
     </div>
 
     <script>
-        const App = {
+        const app = Vue.createApp({
             data() {
                 return {
                     text: 'Puerta cerrada',
@@ -35,7 +35,7 @@
                 <div v-if="open">
                     <div>Hola, {{ username }}</div>
                     <div class="list">
-                        <item v-for="(item, i) in posts" :item="item" :key="i"></item>
+                        <item v-for="(item, i) in posts" :item="item" :key="i" :post="item"></item>
                     </div>
                 </div>
                 <div v-else>
@@ -65,13 +65,20 @@
                     return this.open ? ['open'] : ['closed'];
                 }
             }
-        }
+        });
 
-        const vm = Vue.createApp(App).mount('#app')
+        app.component('item', {
+            props: ['post'],
+            template: `
+                <div class="item">
+                    <div class="title">{{ post.title }}</div>
+                    <p>{{ post.description }}</p>
+                </div>
+            `
+        });
+        
+        const vm = app.mount('#app');
 
-        vm.component('item', {
-            
-        })
     </script>
 
     <style>
@@ -107,7 +114,7 @@
         .open {
             background-color: #b5e7a0;
         }
-        
+
         .list {
             display: flex;
             flex-direction: column;
