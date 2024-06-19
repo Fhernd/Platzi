@@ -23,7 +23,7 @@
                     <v-item v-for="(item, i) in items"
                     :key="item"
                     v-bind:text="item"
-                    v-on:click="remove(i)"/>
+                    v-on:remove="remove(i)"/>
                 </ul>
             `,
             methods: {
@@ -38,8 +38,13 @@
                 text: String
             },
             template: `
-                <li>{{ text }}</li>
+                <li v-on:click="rm">{{ text }}</li>
             `,
+            methods: {
+                rm() {
+                    this.$emit('remove');
+                },
+            },
         });
 
         const vm = app.mount('#app');
