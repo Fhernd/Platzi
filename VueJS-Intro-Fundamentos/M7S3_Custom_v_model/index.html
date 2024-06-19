@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue 3 App</title>
+    <title>7.3 Custom v-model</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
@@ -13,7 +13,29 @@
 
     <script>
         const app = Vue.createApp({
-            
+            data() {
+                return {
+                    text: 'Hello Vue.js',
+                };
+            },
+            template: `
+                <div>
+                    {{ text }}
+                    <v-input v-bind:value="text"/>
+                </div>
+            `,
+        });
+
+        app.component('v-input', {
+            props: {
+                value: {
+                    type: String,
+                    required: true,
+                },
+            },
+            template: `
+                <input type="text" v-bind:value="value"/>
+            `,
         });
 
         const vm = app.mount('#app');
