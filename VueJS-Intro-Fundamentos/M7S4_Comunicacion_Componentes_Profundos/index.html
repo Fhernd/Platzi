@@ -13,7 +13,31 @@
 
     <script>
         const app = Vue.createApp({
-            
+            data() {
+                return {
+                    text: 'Hola Mundo',
+                };
+            },
+            template: `
+                <div>
+                    {{ text}}
+                     <otro />
+                </div>
+            `,
+        });
+
+        app.component('otro', {
+            template: `
+                <tercer />
+            `
+        });
+
+        app.component('tercer', {
+            template: `
+                <div>
+                    {{text}}
+                </div>
+            `
         });
 
         const vm = app.mount('#app');
