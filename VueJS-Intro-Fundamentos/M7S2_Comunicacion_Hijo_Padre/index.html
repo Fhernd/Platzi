@@ -20,10 +20,17 @@
             },
             template: `
                 <ul>
-                    <v-item v-for="item in items" :key="item" v-bind:text="item"></v-item>
-                    <v-item></v-item>
+                    <v-item v-for="(item, i) in items"
+                    :key="item"
+                    v-bind:text="item"
+                    v-on:click="remove(i)"/>
                 </ul>
             `,
+            methods: {
+                remove(index) {
+                    this.items.splice(index, 1);
+                },
+            },
         });
 
         app.component('v-item', {
@@ -34,7 +41,7 @@
                 <li>{{ text }}</li>
             `,
         });
-        
+
         const vm = app.mount('#app');
     </script>
 </body>
