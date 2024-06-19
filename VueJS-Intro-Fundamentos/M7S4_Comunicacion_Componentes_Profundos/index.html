@@ -18,8 +18,10 @@
                     text: 'Hola Mundo',
                 };
             },
-            provide: {
-                otroTexto: 'Hola desde provide'
+            provide() {
+                return {
+                    otroTexto: this.text
+                }
             },
             template: `
                 <div>
