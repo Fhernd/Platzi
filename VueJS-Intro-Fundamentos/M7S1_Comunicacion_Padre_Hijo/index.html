@@ -20,14 +20,15 @@
             },
             template: `
                 <ul>
-                    <v-item v-for="item in items" :key="item">{{ item }}</v-item>
+                    <v-item v-for="item in items" :key="item" v-bind:text="item"></v-item>
                 </ul>
             `,
         });
 
         app.component('v-item', {
+            props: ['text'],
             template: `
-                <li><slot></slot></li>
+                <li>{{ text }}</li>
             `,
         });
         
