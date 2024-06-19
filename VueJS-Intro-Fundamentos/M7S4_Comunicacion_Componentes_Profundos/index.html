@@ -18,6 +18,9 @@
                     text: 'Hola Mundo',
                 };
             },
+            provide: {
+                otroTexto: 'Hola desde provide'
+            },
             template: `
                 <div>
                     {{ text}}
@@ -33,9 +36,10 @@
         });
 
         app.component('tercer', {
+            inject: ['otroTexto'],
             template: `
                 <div>
-                    {{text}}
+                    {{ otroTexto }}
                 </div>
             `
         });
