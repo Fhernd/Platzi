@@ -19,7 +19,17 @@
                 return {
                     text: 'Hola Mundo',
                 };
-            }
+            },
+            template: `
+                <v-button :label="text"></v-button>
+            `,
+        });
+
+        app.component('v-button', {
+            props: ['label'],
+            template: `
+                <button>{{ label }}</button>
+            `,
         });
 
         const vm = app.mount('#app');
