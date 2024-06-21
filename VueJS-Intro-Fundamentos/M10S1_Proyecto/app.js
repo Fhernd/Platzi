@@ -1,34 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Register the ComparisonOption component
-    Vue.component('comparison-option', {
-        props: ['option', 'index'],
-        template: '#comparison-option-template'
-    });
-
-    // Register the Comparison component
-    Vue.component('comparison', {
-        props: ['comparison', 'index'],
-        template: '#comparison-template',
-        methods: {
-            removeOption(optIndex) {
-                this.$emit('remove-option', { comparisonIndex: this.index, optionIndex: optIndex });
-            }
-        }
-    });
-
-    // Create the main Vue instance
-    const app = new Vue({
-        el: '#app',
-        data: {
-            newComparison: {
-                title: '',
-                options: [
-                    { store: '', url: '', price: '', discount: false }
-                ]
-            },
-            comparisons: [],
-            editOption: { store: '', url: '', price: '', discount: false },
-            editIndices: { comparisonIndex: -1, optionIndex: -1 }
+    const app = Vue.createApp({
+        data() {
+            return {
+                newComparison: {
+                    title: '',
+                    options: [
+                        { store: '', url: '', price: '', discount: false }
+                    ]
+                },
+                comparisons: [],
+                editOption: { store: '', url: '', price: '', discount: false },
+                editIndices: { comparisonIndex: -1, optionIndex: -1 }
+            };
         },
         created() {
             this.loadComparisons();
@@ -91,4 +74,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    app.component('comparison-option', {
+        props: ['option', 'index'],
+        template: '#comparison-option-template'
+    });
+
+    app.component('comparison', {
+        props: ['comparison', 'index'],
+        template: '#comparison-template',
+        methods: {
+            removeOption(optIndex) {
+                this.$emit('remove-option', { comparisonIndex: this.index, optionIndex: optIndex });
+            }
+        }
+    });
+    
+    const vm = app.mount('#app');
 });
