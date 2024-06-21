@@ -1,0 +1,31 @@
+<template id="comparison-template">
+    <div class="border rounded p-3 mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5>{{ comparison.title }}</h5>
+            <button class="btn btn-danger btn-sm" @click="$emit('delete-comparison', index)">Eliminar Comparación</button>
+        </div>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Tienda</th>
+                    <th>URL</th>
+                    <th>Precio</th>
+                    <th>Descuento</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(option, optIndex) in comparison.options" :key="optIndex">
+                    <td>{{ option.store }}</td>
+                    <td><a :href="option.url" target="_blank">{{ option.url }}</a></td>
+                    <td>{{ option.price }}</td>
+                    <td>{{ option.discount ? 'Sí' : 'No' }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" @click="$emit('edit-option', { comparisonIndex: index, optionIndex: optIndex })">Editar</button>
+                        <button class="btn btn-danger btn-sm" @click="removeOption(optIndex)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
