@@ -15,47 +15,59 @@
                 <label for="title" class="form-label">Título del Libro</label>
                 <input type="text" id="title" v-model="newComparison.title" class="form-control" required>
             </div>
-            <div v-for="(option, index) in newComparison.options" :key="index" class="border rounded p-3 mb-3">
-                <h5>Opción {{ index + 1 }}</h5>
-                <div class="mb-3">
-                    <label for="store" class="form-label">Nombre de la Tienda</label>
-                    <input type="text" v-model="option.store" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="url" class="form-label">URL</label>
-                    <input type="url" v-model="option.url" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="price" class="form-label">Precio</label>
-                    <input type="number" v-model="option.price" class="form-control" required>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" v-model="option.discount" id="discount">
-                    <label class="form-check-label" for="discount">
-                        ¿Tiene descuento?
-                    </label>
-                </div>
-                <button type="button" class="btn btn-danger mt-2" @click="removeOption(index)">Eliminar Opción</button>
-            </div>
+            <comparison-option v-for="(option, index) in newComparison.options" :key="index" :option="option" :index="index" @remove-option="removeOption"></comparison-option>
             <button type="button" class="btn btn-primary mb-3" @click="addOption">Agregar Opción</button>
             <button type="submit" class="btn btn-success mb-3">Agregar Comparación</button>
         </form>
         <h2 class="mt-4">Comparaciones Guardadas</h2>
         <div v-if="comparisons.length">
-            <div v-for="(comparison, index) in comparisons" :key="index" class="border rounded p-3 mb-3">
-                <h5>{{ comparison.title }}</h5>
-                <div v-for="(option, optIndex) in comparison.options" :key="optIndex" class="border p-2 mb-2">
-                    <p><strong>Tienda:</strong> {{ option.store }}</p>
-                    <p><strong>URL:</strong> <a :href="option.url" target="_blank">{{ option.url }}</a></p>
-                    <p><strong>Precio:</strong> {{ option.price }}</p>
-                    <p><strong>Descuento:</strong> {{ option.discount ? 'Sí' : 'No' }}</p>
-                </div>
-            </div>
+            <comparison v-for="(comparison, index) in comparisons" :key="index" :comparison="comparison"></comparison>
             <button class="btn btn-info" @click="exportCSV">Exportar a CSV</button>
         </div>
         <p v-else>No hay comparaciones guardadas.</p>
     </div>
     <script>
+        const ComparisonOption = {
+            props: ['option', 'index'],
+            template: `
+                <div class="border rounded p-3 mb-3">
+                    <h5>Opción {{ index + 1 }}</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre de la Tienda</label>
+                        <input type="text" v-model="option.store" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">URL</label>
+                        <input type="url" v-model="option.url" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <input type="number" v-model="option.price" class="form-control" required>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" v-model="option.discount">
+                        <label class="form-check-label">
+                            ¿Tiene descuento?
+                        </label>
+                    </div>
+                    <button type="button" class="btn btn-danger mt-2" @click="$emit('remove-option', index)">Eliminar Opción</button>
+                </div>
+            `
+        };
+
+        const Comparison = {
+            props: ['comparison'],
+            template: `
+                <div class="border rounded p-3 mb-3">
+                    <h5>{{ comparison.title }}</h5>
+                    <comparison-option v-for="(option, optIndex) in comparison.options" :key="optIndex" :option="option" :index="optIndex"></comparison-option>
+                </div>
+            `,
+            components: {
+                'comparison-option': ComparisonOption
+            }
+        };
+
         const app = Vue.createApp({
             data() {
                 return {
@@ -111,6 +123,10 @@
                     document.body.appendChild(link);
                     link.click();
                 }
+            },
+            components: {
+                'comparison': Comparison,
+                'comparison-option': ComparisonOption
             }
         });
 
