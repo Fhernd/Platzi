@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comparador de Precios de Libros</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
+
 <body>
     <div id="app" class="container mt-5">
         <h1 class="mb-4">Comparador de Precios de Libros</h1>
@@ -15,18 +18,58 @@
                 <label for="title" class="form-label">Título del Libro</label>
                 <input type="text" id="title" v-model="newComparison.title" class="form-control" required>
             </div>
-            <comparison-option v-for="(option, index) in newComparison.options" :key="index" :option="option" :index="index" @remove-option="removeOption"></comparison-option>
+            <comparison-option v-for="(option, index) in newComparison.options" :key="index" :option="option"
+                :index="index" @remove-option="removeOption"></comparison-option>
             <button type="button" class="btn btn-primary mb-3" @click="addOption">Agregar Opción</button>
             <button type="submit" class="btn btn-success mb-3">Agregar Comparación</button>
         </form>
         <h2 class="mt-4">Comparaciones Guardadas</h2>
         <div v-if="comparisons.length">
-            <comparison v-for="(comparison, index) in comparisons" :key="index" :comparison="comparison"></comparison>
+            <comparison v-for="(comparison, index) in comparisons" :key="index" :comparison="comparison" :index="index"
+                @delete-comparison="deleteComparison" @edit-option="openEditModal"></comparison>
             <button class="btn btn-info" @click="exportCSV">Exportar a CSV</button>
         </div>
         <p v-else>No hay comparaciones guardadas.</p>
     </div>
+
+    <div class="modal fade" id="editOptionModal" tabindex="-1" aria-labelledby="editOptionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOptionModalLabel">Editar Opción</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre de la Tienda</label>
+                        <input type="text" v-model="editOption.store" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">URL</label>
+                        <input type="url" v-model="editOption.url" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <input type="number" v-model="editOption.price" class="form-control" required>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" v-model="editOption.discount">
+                        <label class="form-check-label">
+                            ¿Tiene descuento?
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" @click="saveEdit">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Componente para la opción de comparación
         const ComparisonOption = {
             props: ['option', 'index'],
             template: `
@@ -55,19 +98,48 @@
             `
         };
 
+        // Componente para la comparación completa
         const Comparison = {
-            props: ['comparison'],
+            props: ['comparison', 'index'],
             template: `
                 <div class="border rounded p-3 mb-3">
-                    <h5>{{ comparison.title }}</h5>
-                    <comparison-option v-for="(option, optIndex) in comparison.options" :key="optIndex" :option="option" :index="optIndex"></comparison-option>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5>{{ comparison.title }}</h5>
+                        <button class="btn btn-danger btn-sm" @click="$emit('delete-comparison', index)">Eliminar Comparación</button>
+                    </div>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Tienda</th>
+                                <th>URL</th>
+                                <th>Precio</th>
+                                <th>Descuento</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(option, optIndex) in comparison.options" :key="optIndex">
+                                <td>{{ option.store }}</td>
+                                <td><a :href="option.url" target="_blank">{{ option.url }}</a></td>
+                                <td>{{ option.price }}</td>
+                                <td>{{ option.discount ? 'Sí' : 'No' }}</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" @click="$emit('edit-option', { comparisonIndex: index, optionIndex: optIndex })">Editar</button>
+                                    <button class="btn btn-danger btn-sm" @click="removeOption(optIndex)">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             `,
-            components: {
-                'comparison-option': ComparisonOption
+            methods: {
+                removeOption(optIndex) {
+                    this.$emit('remove-option', { comparisonIndex: this.index, optionIndex: optIndex });
+                }
             }
         };
 
+        // Aplicación principal de Vue
         const app = Vue.createApp({
             data() {
                 return {
@@ -77,7 +149,9 @@
                             { store: '', url: '', price: '', discount: false }
                         ]
                     },
-                    comparisons: []
+                    comparisons: [],
+                    editOption: { store: '', url: '', price: '', discount: false },
+                    editIndices: { comparisonIndex: -1, optionIndex: -1 }
                 };
             },
             created() {
@@ -87,8 +161,9 @@
                 addOption() {
                     this.newComparison.options.push({ store: '', url: '', price: '', discount: false });
                 },
-                removeOption(index) {
-                    this.newComparison.options.splice(index, 1);
+                removeOption({ comparisonIndex, optionIndex }) {
+                    this.comparisons[comparisonIndex].options.splice(optionIndex, 1);
+                    this.saveComparisons();
                 },
                 addComparison() {
                     this.comparisons.push({ ...this.newComparison });
@@ -122,6 +197,21 @@
                     link.setAttribute("download", "comparaciones.csv");
                     document.body.appendChild(link);
                     link.click();
+                },
+                deleteComparison(index) {
+                    this.comparisons.splice(index, 1);
+                    this.saveComparisons();
+                },
+                openEditModal({ comparisonIndex, optionIndex }) {
+                    this.editIndices = { comparisonIndex, optionIndex };
+                    this.editOption = { ...this.comparisons[comparisonIndex].options[optionIndex] };
+                    new bootstrap.Modal(document.getElementById('editOptionModal')).show();
+                },
+                saveEdit() {
+                    const { comparisonIndex, optionIndex } = this.editIndices;
+                    this.comparisons[comparisonIndex].options[optionIndex] = { ...this.editOption };
+                    this.saveComparisons();
+                    bootstrap.Modal.getInstance(document.getElementById('editOptionModal')).hide();
                 }
             },
             components: {
@@ -133,4 +223,5 @@
         app.mount('#app');
     </script>
 </body>
+
 </html>
