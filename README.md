@@ -12,6 +12,12 @@ Este es el curso de GitHub Copilot que estoy realizando en Platzi. En este curso
 
 La carpeta se llama `GitHub-Copilot-Curso`.
 
+## Vue.js: Introducción y Fundamentos [CURSO]
+
+Este es el curso de Vue.js: Introducción y Fundamentos que estoy realizando en Platzi. En este curso aprenderé a utilizar Vue.js, un framework de JavaScript para construir interfaces de usuario.
+
+URL: [Vue.js: Introducción y Fundamentos](hhttps://platzi.com/cursos/vuejs/)
+
 ## Contacto
 
 Si tienes alguna pregunta o comentario sobre mi trabajo, no dudes en contactarme.
