@@ -12,7 +12,7 @@ Route::get('categories',            [CategoryController::class, 'index']);
 Route::get('categories/{category}', [CategoryController::class, 'show']);
 
 Route::get('recipes',            [RecipeController::class, 'index']);
-Route::get('recipes/{category}', [RecipeController::class, 'show']);
+Route::get('recipes/{recipe}', [RecipeController::class, 'show']);
 
 Route::get('tags',            [TagController::class, 'index']);
-Route::get('tags/{category}', [TagController::class, 'show']);
+Route::get('tags/{tag}', [TagController::class, 'show']);
