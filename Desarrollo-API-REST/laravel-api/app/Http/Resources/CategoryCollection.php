@@ -22,6 +22,6 @@ class CategoryCollection extends ResourceCollection
                     'name' => $category->name,
                 ]
             ];
-        });
+        })->toArray();
     }
 }
