@@ -7,15 +7,19 @@ use Illuminate\Http\Request;
 
 use App\Models\Category;
 
+use App\Http\Resources\CategoryResource;
+
 class CategoryController extends Controller
 {
     public function index()
     {
-        return Category::all();
+        return CategoryResource::collection(Category::all());
     }
 
     public function show(Category $category)
     {
-        return $category->load('recipes');
+        $category = $category->load('recipes');
+
+        return new CategoryResource($category);
     }
 }
