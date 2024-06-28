@@ -17,4 +17,10 @@ class RecipeController extends Controller
     {
         return $recipe->load('category', 'tags', 'user');
     }
+
+    public function store(Request $request) {}
+
+    public function update(Request $request, Recipe $recipe) {}
+
+    public function delete(Recipe $recipe) {}
 }
