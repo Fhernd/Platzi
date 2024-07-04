@@ -21,7 +21,7 @@ class TagResource extends JsonResource
                 'name' => $this->name,
             ],
             'relationships' => [
-                'recipes' => $this->recipes
+                'recipes' => RecipeResource::collection($this->recipes),
             ],
         ];
     }

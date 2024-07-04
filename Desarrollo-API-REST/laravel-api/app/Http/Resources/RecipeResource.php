@@ -19,7 +19,7 @@ class RecipeResource extends JsonResource
             'type' => 'recipe',
             'attributes' => [
                 'category' =>       $this->category->name,
-                'author' =>         $this->user->author,
+                'author' =>         $this->user->name,
                 'title' =>          $this->title,
                 'description' =>    $this->description,
                 'ingredients' =>    $this->ingredients,
