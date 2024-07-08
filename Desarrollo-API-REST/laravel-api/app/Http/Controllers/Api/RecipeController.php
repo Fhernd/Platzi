@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
 use App\Http\Requests\StoreRecipeRequest;
+use App\Http\Requests\UpdateRecipeRequest
 
 
 class RecipeController extends Controller
@@ -33,7 +34,7 @@ class RecipeController extends Controller
         return response(new RecipeResource($recipe), Response::HTTP_CREATED);
     }
 
-    public function update(Request $request, Recipe $recipe) 
+    public function UpdateRecipeRequest(Request $request, Recipe $recipe) 
     {
         $recipe->update($request->all());
 
