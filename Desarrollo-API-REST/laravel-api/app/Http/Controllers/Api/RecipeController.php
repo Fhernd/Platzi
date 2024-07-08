@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use App\Http\Resources\RecipeResource;
+use App\Models\Recipe;
 
 
 class RecipeController extends Controller
@@ -24,7 +25,12 @@ class RecipeController extends Controller
         return new RecipeResource($recipe);
     }
 
-    public function store(Request $request) {}
+    public function store(Request $request)
+    {
+        $recipe = Recipe::create($request->all());
+        
+        return response(new RecipeResource($recipe), Response::HTTP_CREATED);
+    }
 
     public function update(Request $request, Recipe $recipe) {}
 
