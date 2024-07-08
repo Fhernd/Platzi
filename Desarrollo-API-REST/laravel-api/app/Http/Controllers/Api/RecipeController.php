@@ -36,7 +36,21 @@ class RecipeController extends Controller
         return response(new RecipeResource($recipe), Response::HTTP_CREATED);
     }
 
-    public function update(Request $request, Recipe $recipe) {}
+    public function update(Request $request, Recipe $recipe) 
+    {
+        $recipe->update($request->all());
 
-    public function delete(Recipe $recipe) {}
+        if ($tags = json_decode($request->tags)) {
+            $recipe->tags()->sync($tags);
+        }
+        
+        return response(new RecipeResource($recipe), Response::HTTP_OK);
+    }
+
+    public function delete(Recipe $recipe) 
+    {
+        $recipe->delete();
+        
+        return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
 }
