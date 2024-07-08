@@ -28,6 +28,10 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         $recipe = Recipe::create($request->all());
+
+        if ($tags = json_decode($request->tags)) {
+            $recipe->tags()->attach($tags);
+        }
         
         return response(new RecipeResource($recipe), Response::HTTP_CREATED);
     }
