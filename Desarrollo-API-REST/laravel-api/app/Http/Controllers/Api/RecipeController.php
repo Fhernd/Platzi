@@ -27,6 +27,16 @@ class RecipeController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+            'ingredients' => 'required',
+            'instructions' => 'required',
+            'image' => 'required',
+        ]);
+        
         $recipe = Recipe::create($request->all());
 
         if ($tags = json_decode($request->tags)) {
