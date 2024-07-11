@@ -7,14 +7,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\RecipeController;
 
-
-
-
-// Route::get('recipes',               [RecipeController::class, 'index']);
-// Route::get('recipes/{recipe}',      [RecipeController::class, 'show']);
-// Route::post('recipes',              [RecipeController::class, 'store']);
-// Route::put('recipes/{recipe}',      [RecipeController::class, 'update']);
-// Route::delete('recipes/{recipe}',   [RecipeController::class, 'delete']);
+Route::get('login', LoginController::class, 'store');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('categories',            [CategoryController::class, 'index']);
