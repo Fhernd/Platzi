@@ -16,16 +16,29 @@ class LoginController extends Controller
 {
     public function store(Request $request)
     {
-        if (!auth()->attempt($request->only('email', 'password'))) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json([
-                'error' => 'Invalid credentials'
+                'message' => 'The provided credentials are incorrect.'
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        $user = auth()->user();
-
-        return response()->json([
-            'token' => $user->createToken('token')->plainTextToken
-        ]);
+        return $response = [
+            'data' => [
+                'attributes' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ],
+                'token' => $user->createToken($request->device_name)->plainTextToken,
+            ]
+        ];
     }
 }
