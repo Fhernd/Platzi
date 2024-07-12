@@ -14,7 +14,7 @@ class RecipePolicy
      * @param  \App\Models\Recipe  $recipe
      * @return bool
      */
-    public function update(User $user, Recipe $recipe)
+    public function update(User $user, Recipe $recipe): bool
     {
         return $user->id === $recipe->user_id;
     }
@@ -26,7 +26,7 @@ class RecipePolicy
      * @param  \App\Models\Recipe  $recipe
      * @return bool
      */
-    public function delete(User $user, Recipe $recipe)
+    public function delete(User $user, Recipe $recipe): bool
     {
         return $user->id === $recipe->user_id;
     }
