@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\RecipeController;
 
-Route::get('login', LoginController::class, 'store');
+Route::post('login', LoginController::class, 'store');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('categories',            [CategoryController::class, 'index']);
