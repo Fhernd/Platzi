@@ -29,7 +29,7 @@ class RecipeController extends Controller
 
     public function store(StoreRecipeRequest $request)
     {
-        $recipe = Recipe::create($request->all());
+        $recipe = $request->user()->recipes()->create($request->all());
         
         return response(new RecipeResource($recipe), Response::HTTP_CREATED);
     }
