@@ -31,6 +31,9 @@ class RecipeController extends Controller
     {
         $recipe = $request->user()->recipes()->create($request->all());
         $recipe->tags()->attach(json_decode($request->tags));
+
+        $recipe->image = $request->file('image')->store('images', 'public');
+        $recipe->save();
         
         return response(new RecipeResource($recipe), Response::HTTP_CREATED);
     }
