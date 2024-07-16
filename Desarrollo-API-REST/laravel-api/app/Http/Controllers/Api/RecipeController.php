@@ -44,6 +44,11 @@ class RecipeController extends Controller
 
         $recipe->update($request->all());
 
+        if ($request->file('image')) {
+            $recipe->image = $request->file('image')->store('images', 'public');
+            $recipe->save();
+        }
+
         if ($tags = json_decode($request->tags)) {
             $recipe->tags()->sync($tags);
         }
