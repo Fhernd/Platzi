@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
 use App\Http\Requests\StoreRecipeRequest;
-use App\Http\Requests\UpdateRecipeRequest
+use App\Http\Requests\UpdateRecipeRequest;
 
 
 class RecipeController extends Controller
