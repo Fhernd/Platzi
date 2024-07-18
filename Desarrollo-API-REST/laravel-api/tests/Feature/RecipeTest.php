@@ -85,4 +85,29 @@ class RecipeTest extends TestCase
         $response = $this->getJson('/api/recipes/' . $data)
             ->assertStatus(Response::HTTP_CREATED);
     }
+
+    public function test_update() : void
+    {
+        Sanctum::actingAs(User::factory()->create());
+
+        $category = Category::factory()->create();
+        $tag = Tag::factory()->create();
+        $recipe = Recipe::factory()->create();
+
+        $data = [
+            'catagory_id' => $category->id,
+            'title' => 'Updated Title',
+            'description' => 'Updated Description',
+            'ingredients' => 'Updated Ingredients',
+            'instructions' => 'Updated Instructions'
+        ];
+
+        $response = $this->putJson('/api/recipes/' . $recipe->id, $data)
+            ->assertStatus(Response::HTTP_OK);
+
+        $this->assertDatabaseHas('recipes', [
+            'title' => 'Updated Title',
+            'description' => 'Updated Description',
+        ]);
+    }
 }
