@@ -9,13 +9,16 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
+use Illuminate\Http\UploadedFile;
+
 use App\Models\Recipe;
+use App\Models\Tag;
 use App\Models\Category;
 use App\Models\User;
 
 class RecipeTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     public function test_index(): void
     {
@@ -60,5 +63,26 @@ class RecipeTest extends TestCase
             ->assertStatus(Response::HTTP_NO_CONTENT);
 
         $this->assertDatabaseMissing('recipes', ['id' => $recipe->id]);
+    }
+
+    public function test_store()
+    {
+        Sanctum::actingAs(User::factory()->create());
+
+        $category = Category::factory()->create();
+        $tag = Tag::factory()->create();
+
+        $data = [
+            'catagory_id' => $category->id,
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'ingredients' => $this->faker->text,
+            'instructions' => $this->faker->text,
+            'tag' => $tag->id,
+            'image' => UploadedFile::fake()->image('recipe.jpg')
+        ];
+
+        $response = $this->getJson('/api/recipes/' . $data)
+            ->assertStatus(Response::HTTP_CREATED);
     }
 }
