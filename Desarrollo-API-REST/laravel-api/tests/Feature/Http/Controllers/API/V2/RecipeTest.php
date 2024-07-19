@@ -15,7 +15,7 @@ class RecipeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_index(): void
+    public function test_index_v2(): void
     {
         Sanctum::actingAs(User::factory()->create());
         Category::factory()->create();
