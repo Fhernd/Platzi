@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers\API\V2;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
@@ -22,7 +21,7 @@ class RecipeTest extends TestCase
 
         $recipes = Recipe::factory(5)->create();
 
-        $response = $this->getJson('/api/v1/recipes')
+        $response = $this->getJson('/api/v2/recipes')
             ->assertJsonCount(5, 'data')
             ->assertJsonStructure([
                 'data' => [],
