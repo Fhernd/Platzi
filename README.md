@@ -18,6 +18,12 @@ Este es el curso de Vue.js: Introducción y Fundamentos que estoy realizando en 
 
 URL: [Vue.js: Introducción y Fundamentos](hhttps://platzi.com/cursos/vuejs/)
 
+## Desarrollo de API REST: Estándares y Buenas Prácticas [CURSO]
+
+Este es el curso de Desarrollo de API REST: Estándares y Buenas Prácticas que realicé en Platzi. En este curso aprendí a desarrollar APIs RESTful siguiendo estándares y buenas prácticas.
+
+![Diploma de Buenas Prácticas en API REST](Desarrollo-API-REST/diploma-buenas-practicas-api.png)
+
 ## Contacto
 
 Si tienes alguna pregunta o comentario sobre mi trabajo, no dudes en contactarme.
