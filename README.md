@@ -36,6 +36,11 @@ Carpeta: `Desarrollo-API-REST`.
 Fecha de terminación: 21 de julio de 2024  
 URL: [Curso de Desarrollo de API REST: Estándares y Buenas Prácticas](https://platzi.com/cursos/buenas-practicas-api/)  
 
+## Fundamentos de Matemáticas para Física [CURSO]
+
+Este es el curso de Fundamentos de Matemáticas para Física que estoy realizando en Platzi. En este curso aprenderé los conceptos matemáticos fundamentales para entender la física.
+
+
 ## Contacto
 
 Si tienes alguna pregunta o comentario sobre mi trabajo, no dudes en contactarme.
